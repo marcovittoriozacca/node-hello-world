@@ -8,12 +8,15 @@ const host = process.env.HOST || "localhost";
 //arguments array reset
 process.argv.splice(0,2);
 
+//function that gets a random quote from argument/external array
 const randomQuote = () => {
     const argv = process.argv;
     let randomQuoteArray = [];
 
     //if we dont have any argument the random quote will be generated from this static array, otherwise we will generate it from the arguments array
     if(argv.length === 0){
+
+        //external quotes array
         const importedQuotes = require('./quotes');
         importedQuotes.forEach((el) => {
             randomQuoteArray.push(el.quote);
@@ -21,11 +24,12 @@ const randomQuote = () => {
     }else{
         randomQuoteArray = argv;
     }
+    //get a random index end return the element associated with that index
     const randomIndex = Math.floor(Math.random() * randomQuoteArray.length);
     return randomQuoteArray[randomIndex];
 }
 
-//create server function
+//create server method
 http
     .createServer((req, res) => {
         //404 response for the favicon request
