@@ -53,6 +53,8 @@ http
                 </head>
                 <body>
                     <h1 class="text-3xl p-5 font-bold text-center">${quote}</h1>
+                    
+                    <h2 class="text-2xl font-semibold">${process.env.STATIC_QUOTE} - From <span class="underline">.env</span> File</h2>
                 </body>
             </html>`
         );
