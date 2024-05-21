@@ -1,5 +1,7 @@
 const http = require('http');
 require('dotenv').config();
+const path = require('path');
+const fs = require('fs');
 
 //env variables (port and host)
 const port = process.env.PORT || 8080;
@@ -32,10 +34,11 @@ const randomQuote = () => {
 //create server method
 http
     .createServer((req, res) => {
-        //404 response for the favicon request
+        //setting up the favicon
         if(req.url === '/favicon.ico'){
-            res.writeHead(404, {"Content-Type": "text/html"});
-            res.end();
+            const favicon = path.join(__dirname, 'public', 'favicon.ico');
+            res.setHeader('Content-Type', 'image/x-icon');
+            fs.createReadStream(favicon).pipe(res);
             return;
         }
 
