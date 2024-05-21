@@ -14,7 +14,10 @@ const randomQuote = () => {
 
     //if we dont have any argument the random quote will be generated from this static array, otherwise we will generate it from the arguments array
     if(argv.length === 0){
-        randomQuoteArray = ['quote1', 'quote2', 'quote3', 'quote4'];
+        const importedQuotes = require('./quotes');
+        importedQuotes.forEach((el) => {
+            randomQuoteArray.push(el.quote);
+        });
     }else{
         randomQuoteArray = argv;
     }
@@ -35,7 +38,20 @@ http
         //status 200 for other requests
         res.writeHead(200, {"Content-Type": "text/html"});
         const quote = randomQuote();
-        res.end(`<h1>${quote}</h1>`);
+        res.end(`
+            <!DOCTYPE html>
+            <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Random Quote</title>
+                    <script src="https://cdn.tailwindcss.com"></script>
+                </head>
+                <body>
+                    <h1 class="text-3xl p-5 font-bold text-center">${quote}</h1>
+                </body>
+            </html>`
+        );
 
     }).listen(port, host, () => {
         const serverUrl = `http://${host}:${port}`;
